@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
     public float jumpSpeed = 0.5f;
 
     private Animator marioAnimator;
+    public Rigidbody2D rb2d;
+
     private float scaleX = 1.0f;
     private float scaleY = 1.0f;
 
@@ -14,12 +16,13 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         marioAnimator = GetComponent<Animator>();
-
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         marioAnimator.SetBool("Grounded", grounded);
+        marioAnimator.speed = rb2d.velocity.sqrMagnitude;
 	}
     void FixedUpdate()
     {
@@ -36,6 +39,6 @@ public class Player : MonoBehaviour {
             transform.localScale = new Vector2(-scaleX, scaleY);
         }
 
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(mSpeed * speed, this.GetComponent<Rigidbody2D>().velocity.y);
+        rb2d.velocity = new Vector2(mSpeed * speed, rb2d.velocity.y);
     }
 }
